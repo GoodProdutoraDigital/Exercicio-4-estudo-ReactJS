@@ -14,22 +14,22 @@ function App() {
   const [est, setEst] = useState('')
   const [ddd, setDDD] = useState('')
 
-  const {register, handleSubmit} = useForm()
+  const {register, handleSubmit, setValue} = useForm()
   
-  const buscaCep = async (e) => {
-    const res = await fetch('https://viacep.com.br/ws/'+ e.cep +'/json/')
-    /* aguarda a reposta e trasforma em json */
-    .then((res) => res.json())
-    
-    console.log(res)
-    setCep(res.cep)
-    setEnd(res.logradouro)
-    setComp(res.complemento)
-    setBair(res.bairro)
-    setCid(res.localidade)
-    setEst(res.uf)
-    setDDD(res.ddd)
+  const buscaCep = (e) => {
+    fetch(`https://viacep.com.br/ws/${e.cep}/json/`)
+    /* aguarda a reposta e trasforma para objeto json */
+    .then((res) => res.json()).then(data => {
 
+      setCep(data.cep)
+      setEnd(data.logradouro)
+      setComp(data.complemento)
+      setBair(data.bairro)
+      setCid(data.localidade)
+      setEst(data.uf)
+      setDDD(data.ddd)
+      
+    })
   }
 
   return (
